@@ -7,7 +7,7 @@ class Router
     /**
      * @var array
      */
-    protected $afterRoutes = [];
+    protected $routes = [];
 
     /**
      * @var string
@@ -55,7 +55,7 @@ class Router
     public function match($methods, $path, $fn)
     {
         foreach (explode('|', $methods) as $method) {
-            $this->afterRoutes[$method][] = array(
+            $this->routes[$method][] = array(
                 'path' => $path,
                 'fn' => $fn,
             );
@@ -72,8 +72,8 @@ class Router
 
         $numHandled = 0;
 
-        if (isset($this->afterRoutes[$this->requestedMethod])) {
-            $numHandled = $this->handle($this->afterRoutes[$this->requestedMethod], true);
+        if (isset($this->routes[$this->requestedMethod])) {
+            $numHandled = $this->handle($this->routes[$this->requestedMethod], true);
         }
 
         if ($numHandled === 0) {
@@ -169,9 +169,6 @@ class Router
             try {
                 if (class_exists($controller)) {
                         $c = call_user_func_array(array(new $controller(), $method), $params);
-                    if ($c === false) {
-                    }
-                        echo $c;
                 } else {
                     throw new \Exception('Controller not found.', 404);
                 }

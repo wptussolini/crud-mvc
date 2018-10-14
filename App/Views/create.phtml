@@ -200,6 +200,8 @@
         el.find('input').val('').attr('name', 'phones[]');
         el.find('button').attr('onclick', 'removeField("phone-' + item + '")');
         item ++;
+        $('.phone-number').mask(PhoneMaskBehavior, PhoneOptions);
+
     }
     var PhoneMaskBehavior = function (val) {
             return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
