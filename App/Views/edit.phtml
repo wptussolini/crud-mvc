@@ -1,0 +1,251 @@
+<div class="card-header">
+    <h4>Novo usuário</h4>
+</div>
+<div class="card-body">
+    <form method="POST" id="edit_form">
+        <div class="form-group row">
+            <label for="name" class="col-sm-3 col-form-label">Nome</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="name" name="name" placeholder="Nome de usuário" value="<?= $user->name ?>">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="cep" class="col-sm-3 col-form-label">CEP</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="cep" name="cep"  data-mask="00000-000" placeholder="CEP" value="<?= $user->cep ?>">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="road" class="col-sm-3 col-form-label">Rua</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="rua" name="road" placeholder="Rua" value="<?= $user->road ?>">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="number" class="col-sm-3 col-form-label">Número</label>
+            <div class="col-sm-4">
+                <input type="number" class="form-control" id="number" name="number" placeholder="Número" value="<?= $user->number ?>">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="complement" class="col-sm-3 col-form-label">Complemento</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="complement" name="complement" placeholder="Complemento" value="<?= $user->complement ?>">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="neigh" class="col-sm-3 col-form-label">Bairro</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="bairro" name="neigh" placeholder="Bairro" value="<?= $user->neigh ?>">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="city" class="col-sm-3 col-form-label">Cidade</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="cidade" name="city" placeholder="Cidade" value="<?= $user->city ?>">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="state" class="col-sm-3 col-form-label">Estado</label>
+            <div class="col-sm-9">
+                <select class="form-control" id="uf" name="state">
+                    <option value="AC">Acre</option>
+                    <option value="AL">Alagoas</option>
+                    <option value="AP">Amapá</option>
+                    <option value="AM">Amazonas</option>
+                    <option value="BA">Bahia</option>
+                    <option value="CE">Ceará</option>
+                    <option value="DF">Distrito Federal</option>
+                    <option value="ES">Espírito Santo</option>
+                    <option value="GO">Goiás</option>
+                    <option value="MA">Maranhão</option>
+                    <option value="MT">Mato Grosso</option>
+                    <option value="MS">Mato Grosso do Sul</option>
+                    <option value="MG">Minas Gerais</option>
+                    <option value="PA">Pará</option>
+                    <option value="PB">Paraíba</option>
+                    <option value="PR">Paraná</option>
+                    <option value="PE">Pernambuco</option>
+                    <option value="PI">Piauí</option>
+                    <option value="RJ">Rio de Janeiro</option>
+                    <option value="RN">Rio Grande do Norte</option>
+                    <option value="RS">Rio Grande do Sul</option>
+                    <option value="RO">Rondônia</option>
+                    <option value="RR">Roraima</option>
+                    <option value="SC">Santa Catarina</option>
+                    <option value="SP">São Paulo</option>
+                    <option value="SE">Sergipe</option>
+                    <option value="TO">Tocantins</option>
+                    <option value="ES">Estrangeiro</option>
+                </select>
+            </div>
+        </div>
+        <hr>
+        <div class="header">
+            <h6 class="float-left">Telefones</h6>
+            <button class="btn btn-primary btn-small float-right" type="button" onclick="addField()">+ Telefone</button>
+            <div class="clearfix"></div>
+        </div>
+        <div class="row-phones row">
+            <div id="phone-block" class="col-sm-7 mt-3 mx-auto d-none">
+                <div class="row">
+                    <div class="col-sm-3 d-flex align-items-center">
+                        Telefone
+                    </div>
+                    <input type="text" class="form-control col-sm-6 phone-number"">
+                    <div class="col-sm-3">
+                        <button class="btn btn-small btn-danger" type="button">X</button>
+                    </div>
+                </div>
+            </div>
+            <?php $i = 1; if(is_array($user->phones())): foreach ($user->phones() as $phone):?>
+                <div class="col-sm-7 mt-3 mx-auto <?= 'phone-'. $i ?>">
+                    <div class="row">
+                        <div class="col-sm-3 d-flex align-items-center">
+                            Telefone
+                        </div>
+                        <input type="text" class="form-control col-sm-6 phone-number" name="phones[]" value="<?= $phone->number ?>">
+                        <div class="col-sm-3">
+                            <button class="btn btn-small btn-danger" onclick="removeField('<?= 'phone-'.$i?>')" type="button">X</button>
+                        </div>
+                    </div>
+                </div>
+            <?php  $i++; endforeach; elseif(isset($user->phones()->id)): ?>
+                <div class="col-sm-7 mt-3 mx-auto <?= 'phone-'. $i ?>">
+                    <div class="row">
+                        <div class="col-sm-3 d-flex align-items-center">
+                            Telefone
+                        </div>
+                        <input type="text" class="form-control col-sm-6 phone-number" name="phones[]" value="<?= $phone->number ?>">
+                        <div class="col-sm-3">
+                            <button class="btn btn-small btn-danger" onclick="removeField('<?= 'phone-'.$i?>')" type="button">X</button>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </div>
+        <div class="form-group row mt-5">
+            <div class="ml-auto">
+                <a href="/" "submit" class="btn btn-danger">Cancelar</a>
+                <button type="submit" class="btn btn-success">Salvar</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript" src="/js/jquery.mask.js"></script>
+<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.js"></script>
+<script type="text/javascript" >
+    $(document).ready(function() {
+        $('.phone-number').mask(PhoneMaskBehavior, PhoneOptions);
+        $('#edit_form').validate({
+            rules: {
+                name: { required: true },
+                cep: { required: true },
+                number: { required: true },
+                road: { required: true },
+                city: { required: true },
+                state: { required: true },
+                neigh: { required: true }
+            },
+            messages: {
+                name: { required: 'Preencha o campo nome' },
+                cep: { required: 'Informe o cep'},
+                number: { required: 'Informe o numero' },
+                road: { required: 'Informe a rua'},
+                city: { required: 'Informe a cidade'},
+                state: { required: 'Informe o estado'},
+                neigh: { required: 'Informe o bairro'}
+
+            },
+            submitHandler: function( form ){
+                var dados = $( form ).serialize();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/update/"+<?=$user->id?>,
+                    data: dados,
+                    success: function( data )
+                    {
+                        alert("Conta de usuario editada com sucesso!");
+                        window.location.href = '/'
+                    }
+                });
+
+                return false;
+            }
+        });
+
+        var cep = <?= $user->cep ?>;
+        function limpa_formulário_cep() {
+            $("#rua").val("");
+            $("#bairro").val("");
+            $("#cidade").val("");
+            $("#uf").val("");
+        }
+        $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+            if (!("erro" in dados)) {
+                $("#rua").val(dados.logradouro);
+                $("#bairro").val(dados.bairro);
+                $("#cidade").val(dados.localidade);
+                $("#uf").val(dados.uf);
+            }
+            else {
+                limpa_formulário_cep();
+                alert("CEP não encontrado.");
+            }
+        });
+        $("#cep").blur(function() {
+            var cep = $(this).val().replace(/\D/g, '');
+            if (cep != "") {
+                var validacep = /^[0-9]{8}$/;
+                if(validacep.test(cep)) {
+                    $("#rua").val("...");
+                    $("#bairro").val("...");
+                    $("#cidade").val("...");
+                    $("#uf").val("...");
+                    $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+                        if (!("erro" in dados)) {
+                            $("#rua").val(dados.logradouro);
+                            $("#bairro").val(dados.bairro);
+                            $("#cidade").val(dados.localidade);
+                            $("#uf").val(dados.uf);
+                        }
+                        else {
+                            limpa_formulário_cep();
+                            alert("CEP não encontrado.");
+                        }
+                    });
+                }
+                else {
+                    limpa_formulário_cep();
+                    alert("Formato de CEP inválido.");
+                }
+            }
+            else {
+                limpa_formulário_cep();
+            }
+        });
+    });
+    var item = <?=$i?>;
+    function removeField(item) {
+        $('.' + item).remove();
+    }
+    function addField() {
+        var el = $("#phone-block").clone().appendTo($('.row-phones'));
+        el.removeClass('d-none');
+        el.find('input').val('').attr('name', 'phones[]');
+        el.addClass('phone-' + item).removeAttr('id');
+        var button = el.find('button').attr('onclick', 'removeField("phone-' + item + '")');
+        item ++;
+        $('.phone-number').mask(PhoneMaskBehavior, PhoneOptions);
+    }
+    var PhoneMaskBehavior = function (val) {
+            return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+        },
+        PhoneOptions = {
+            onKeyPress: function(val, e, field, options) {
+                field.mask(PhoneMaskBehavior.apply({}, arguments), options);
+            }
+        };
+</script>

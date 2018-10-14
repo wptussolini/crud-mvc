@@ -1,0 +1,31 @@
+<div class="card-header">
+    <div class="float-left">
+        <h3>Usuários</h3>
+    </div>
+    <div class="float-right">
+        <a href="/create" class="btn btn-sm btn-success">Adicionar</a>
+    </div>
+</div>
+<div class="card-body">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nome de usuário</th>
+            <th scope="col">Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+            <?php foreach($users as $user): ?>
+            <tr>
+                <td><?= $user->id ?></td>
+                <td><?= $user->name ?></td>
+                <td><a href="/show/<?= $user->id ?>" class="btn btn-sm btn-primary">Ver</a>
+                    <a href="/edit/<?= $user->id ?>" class="btn btn-sm btn-warning">Editar</a>
+                    <a href="/delete/<?= $user->id ?>" class="btn btn-sm btn-danger">Deletar</a>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
